@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-success btnCheckSpeed">Check Speed
+            </button>
+            <br><br>
+            <h1 class="download"></h1>
+            <h1 class="upload"></h1>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        function sizeFormatter(x) {
+            let l = 0, n = parseInt(x, 10) || 0;
+            while (n >= 1024 && ++l) {
+                n = n / 1024;
+            }
+            return (n.toFixed(n < 10 && l > 0 ? 1 : 0) + ' ' + units[l]);
+        }
+
+        $('.btnCheckSpeed').click(function () {
+            $.post('/check-speed', {}, function (data) {
+                $('.download').html("Download Speed: "+data.download);
+                $('.upload').html("Upload Speed: "+data.upload);
+            });
+        });       
+        
+    </script>
+</body>
+
+</html>
